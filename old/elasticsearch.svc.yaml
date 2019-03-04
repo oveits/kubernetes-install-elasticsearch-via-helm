@@ -1,0 +1,65 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-02-22T00:20:54Z"
+    labels:
+      app: elasticsearch
+      chart: elasticsearch-1.17.0
+      component: client
+      heritage: Tiller
+      release: elasticsearch-v1
+    name: elasticsearch-v1-client
+    namespace: elasticsearch
+    resourceVersion: "176719"
+    selfLink: /api/v1/namespaces/elasticsearch/services/elasticsearch-v1-client
+    uid: b7e4211d-3637-11e9-bba2-9600001bfa15
+  spec:
+    clusterIP: 10.99.208.76
+    ports:
+    - name: http
+      port: 9200
+      protocol: TCP
+      targetPort: http
+    selector:
+      app: elasticsearch
+      component: client
+      release: elasticsearch-v1
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-02-22T00:20:54Z"
+    labels:
+      app: elasticsearch
+      chart: elasticsearch-1.17.0
+      component: master
+      heritage: Tiller
+      release: elasticsearch-v1
+    name: elasticsearch-v1-discovery
+    namespace: elasticsearch
+    resourceVersion: "176721"
+    selfLink: /api/v1/namespaces/elasticsearch/services/elasticsearch-v1-discovery
+    uid: b7e55f1c-3637-11e9-bba2-9600001bfa15
+  spec:
+    clusterIP: None
+    ports:
+    - port: 9300
+      protocol: TCP
+      targetPort: transport
+    selector:
+      app: elasticsearch
+      component: master
+      release: elasticsearch-v1
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

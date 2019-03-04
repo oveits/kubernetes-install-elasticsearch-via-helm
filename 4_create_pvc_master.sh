@@ -25,7 +25,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: my-local-storage-class
+  storageClassName: ${STORAGE_CLASS}
   resources:
     requests:
       storage: 4Gi
