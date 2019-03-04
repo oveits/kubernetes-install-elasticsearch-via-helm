@@ -1,5 +1,5 @@
 
 source 0_source_config.sh
 
-helm delete ${RELEASE}
+bash 2_create_elasticsearch.sh delete
 
