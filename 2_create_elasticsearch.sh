@@ -10,26 +10,6 @@ fi
 
 source 0_source_config.sh
 
-#if [ "$CMD" == "delete" ] || [ "$CMD" == "del" ]; then
-#  helm ls --all ${RELEASE} && helm del --purge ${RELEASE}
-#  bash 4_create_pvc_master.sh -d
-#  bash 3_create_pvc_data.sh -d
-#else
-#  
-#  helm $CMD stable/elasticsearch \
-#    --name ${RELEASE} \
-#    --set client.replicas=${MIN_REPLICAS} \
-#    --set master.replicas=${REPLICAS} \
-#    --set master.persistence.storageClass=${STORAGE_CLASS} \
-#    --set data.replicas=${MIN_REPLICAS} \
-#    --set data.persistence.storageClass=${STORAGE_CLASS} \
-#    --set master.podDisruptionBudget.minAvailable=${MIN_REPLICAS} \
-#    --set cluster.env.MINIMUM_MASTER_NODES=${MIN_REPLICAS} \
-#    --set cluster.env.RECOVER_AFTER_MASTER_NODES=${MIN_REPLICAS} \
-#    --set cluster.env.EXPECTED_MASTER_NODES=${MIN_REPLICAS} \
-#    --namespace elasticsearch 
-#fi
-
 OPTIONS="--name ${RELEASE} \
       --set client.replicas=${MIN_REPLICAS} \
       --set master.replicas=${REPLICAS} \
@@ -54,32 +34,10 @@ case $CMD in
     helm ls --all ${RELEASE} && helm del --purge ${RELEASE}
     bash 4_create_pvc_master.sh -d
     bash 3_create_pvc_data.sh -d
-    helm $CMD stable/elasticsearch \
-      --name ${RELEASE} \
-      --set client.replicas=${MIN_REPLICAS} \
-      --set master.replicas=${REPLICAS} \
-      --set master.persistence.storageClass=${STORAGE_CLASS} \
-      --set data.replicas=${MIN_REPLICAS} \
-      --set data.persistence.storageClass=${STORAGE_CLASS} \
-      --set master.podDisruptionBudget.minAvailable=${MIN_REPLICAS} \
-      --set cluster.env.MINIMUM_MASTER_NODES=${MIN_REPLICAS} \
-      --set cluster.env.RECOVER_AFTER_MASTER_NODES=${MIN_REPLICAS} \
-      --set cluster.env.EXPECTED_MASTER_NODES=${MIN_REPLICAS} \
-      --namespace elasticsearch
+    helm $CMD stable/elasticsearch $OPTIONS
     ;;
   "template")
-    helm $CMD ../charts/stable/elasticsearch \
-      --name ${RELEASE} \
-      --set client.replicas=${MIN_REPLICAS} \
-      --set master.replicas=${REPLICAS} \
-      --set master.persistence.storageClass=${STORAGE_CLASS} \
-      --set data.replicas=${MIN_REPLICAS} \
-      --set data.persistence.storageClass=${STORAGE_CLASS} \
-      --set master.podDisruptionBudget.minAvailable=${MIN_REPLICAS} \
-      --set cluster.env.MINIMUM_MASTER_NODES=${MIN_REPLICAS} \
-      --set cluster.env.RECOVER_AFTER_MASTER_NODES=${MIN_REPLICAS} \
-      --set cluster.env.EXPECTED_MASTER_NODES=${MIN_REPLICAS} \
-      --namespace elasticsearch
+    helm $CMD ../charts/stable/elasticsearch $OPTIONS
     ;;
   *) echo "no clue - $CMD"; ;;
 esac;
